@@ -6,6 +6,8 @@ const amountEl_two = document.getElementById('amount-two');
 const rateEl = document.getElementById('rate');
 const swap = document.getElementById('swap');
 
+
+
 // fetch exchange rates and update the DOM
 function calculate() {
   const currency_one = currencyEl_one.value;
@@ -16,16 +18,19 @@ function calculate() {
   .then(data => {
     // console.log(data);
     // console.log(data.time_last_update_utc);
-    const timeUpdate = dateFns.format(data.time_last_update_utc,'Do MMMM YYYY');
-
+    const timeUpdate = data.time_last_update_utc;
+    const timeFix = dateFns.format(new Date(timeUpdate), 'do MMMM yyyy');
 
     const rate = data.conversion_rates[currency_two];
 
-    rateEl.innerText = `1 ${currency_one} = ${rate} ${currency_two} [${timeUpdate}]`;
+    rateEl.innerText = `1 ${currency_one} = ${rate} ${currency_two} (${timeFix})` ;
 
     amountEl_two.value = (amountEl_one.value * rate).toFixed(2);
   });
+
+  
 }
+
 
 
 // event listeners
